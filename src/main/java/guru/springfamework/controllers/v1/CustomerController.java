@@ -42,4 +42,24 @@ public class CustomerController {
         return new ResponseEntity<CustomerDTO>(customerService.saveCustomer(id, customerDTO),
                 HttpStatus.OK);
     }
+
+    /**
+     * In oppisote to update method, changes only properties that were passed (not null)
+     * @param id
+     * @param customerDTO
+     * @return
+     */
+    @PatchMapping({"/{id}"})
+    public ResponseEntity<CustomerDTO> patchCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO){
+        return new ResponseEntity<CustomerDTO>(customerService.patchCustomer(id, customerDTO),
+                HttpStatus.OK);
+    }
+
+    @DeleteMapping({"/{id}"})
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id){
+
+        customerService.deleteCustomerById(id);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
