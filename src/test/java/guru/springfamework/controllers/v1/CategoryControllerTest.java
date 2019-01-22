@@ -1,7 +1,9 @@
 package guru.springfamework.controllers.v1;
 
 import guru.springfamework.api.v1.model.CategoryDTO;
+import guru.springfamework.controllers.RestResponseEntityExceptionHandler;
 import guru.springfamework.services.CategoryService;
+import guru.springfamework.services.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -24,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class CategoryControllerTest {
 
-        public static final String NAME = "Jim";
+        public static final String NAME = "SomeCategory";
 
         @Mock
         CategoryService categoryService;
@@ -37,7 +39,9 @@ public class CategoryControllerTest {
         @Before
         public void setUp() throws Exception {
             MockitoAnnotations.initMocks(this);
-            mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+            mockMvc = MockMvcBuilders.standaloneSetup(categoryController)
+                    .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                    .build();
         }
 
         @Test
@@ -55,7 +59,7 @@ public class CategoryControllerTest {
             when(categoryService.getAllCategories()).thenReturn(categories);
 
             //executing
-            mockMvc.perform(get("/api/v1/categories/")
+            mockMvc.perform(get(CategoryController.BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.categories", hasSize(2)));
@@ -71,9 +75,23 @@ public class CategoryControllerTest {
             when(categoryService.getCategoryByName(anyString())).thenReturn(category1);
 
             //executing
-            mockMvc.perform(get("/api/v1/categories/Jim")
+            mockMvc.perform(get(getCategoryUrl(NAME))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.name", equalTo(NAME)));
         }
+
+    private String getCategoryUrl(String name) {
+        return CategoryController.BASE_URL + "/" + name;
+    }
+
+    @Test
+    public void testGetByNameNotFound() throws Exception {
+
+        when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(CategoryController.BASE_URL + "/Foo")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }
