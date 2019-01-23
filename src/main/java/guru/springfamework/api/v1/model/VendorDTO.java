@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class CustomerDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class VendorDTO {
     private Long id;
-    private String lastname;
-    private String firstname;
-    @JsonProperty("customer_url")
-    private String customerUrl;
+    private String name;
+    @JsonProperty("vendor_url")
+    private String vendorUrl;
 }

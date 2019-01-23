@@ -21,13 +21,13 @@ public class CustomerController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public CustomerListDTO getAllCategories(){
+    public CustomerListDTO getAllCustomers(){
         return new CustomerListDTO(customerService.getAllCustomers());
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDTO getCategoryByName(@PathVariable String id){
+    public CustomerDTO getCustomerByName(@PathVariable String id){
         return customerService.getCustomerById(Long.valueOf(id));
     }
 

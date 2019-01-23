@@ -73,7 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
             returnDto.setCustomerUrl("/api/v1/customers/" + id);
             return returnDto;
 
-        }).orElseThrow(ResourceNotFoundException::new); //todo implement better exception handling;
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override

@@ -9,11 +9,10 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Customer {
+public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String lastname;
-    private String firstname;
-    //private String customerUrl;
+    private String name;
+    //private String vendorUrl;
 }

@@ -49,7 +49,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testListCategories() throws Exception {
+    public void testListCustomers() throws Exception {
         //mocking
         CustomerDTO customer1 = new CustomerDTO();
         customer1.setId(ID);
@@ -75,7 +75,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testGetByNameCategories() throws Exception {
+    public void testGetByNameCCustomers() throws Exception {
         //mocking
         CustomerDTO customer1 = new CustomerDTO();
         customer1.setId(ID);
