@@ -60,6 +60,7 @@ public class CategoryControllerTest {
 
             //executing
             mockMvc.perform(get(CategoryController.BASE_URL)
+                    .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.categories", hasSize(2)));
@@ -76,6 +77,7 @@ public class CategoryControllerTest {
 
             //executing
             mockMvc.perform(get(getCategoryUrl(NAME))
+                    .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.name", equalTo(NAME)));
