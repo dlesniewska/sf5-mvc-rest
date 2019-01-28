@@ -1,7 +1,7 @@
 package guru.springframework.controllers.v1;
 
-import guru.springframework.api.v1.model.CustomerDTO;
 import guru.springframework.controllers.RestResponseEntityExceptionHandler;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.services.CustomerService;
 import guru.springframework.services.ResourceNotFoundException;
 import org.junit.Before;
@@ -107,7 +107,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
         savedCustomerDTO.setLastname(customerDTO.getLastname());
         savedCustomerDTO.setCustomerUrl(getCustomerUrl(ID));
 
-        when(customerService.createNewCustomer(customerDTO)).thenReturn(savedCustomerDTO);
+        when(customerService.createNewCustomer(any())).thenReturn(savedCustomerDTO);
 
         //execution
         mockMvc.perform(post(CustomerController.BASE_URL)
@@ -116,7 +116,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
                 .content(asJsonString(customerDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
-                .andExpect(jsonPath("$.customer_url", equalTo(getCustomerUrl(ID))));
+                .andExpect(jsonPath("$.customerUrl", equalTo(getCustomerUrl(ID))));
     }
 
     @Test
@@ -141,7 +141,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
                 .andExpect(jsonPath("$.lastname", equalTo(LASTNAME)))
-                .andExpect(jsonPath("$.customer_url", equalTo(getCustomerUrl(ID))));
+                .andExpect(jsonPath("$.customerUrl", equalTo(getCustomerUrl(ID))));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
                 .andExpect(jsonPath("$.lastname", equalTo(LASTNAME)))
-                .andExpect(jsonPath("$.customer_url", equalTo(getCustomerUrl(ID))));
+                .andExpect(jsonPath("$.customerUrl", equalTo(getCustomerUrl(ID))));
     }
 
     @Test
